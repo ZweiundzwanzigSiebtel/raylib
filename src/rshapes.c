@@ -674,9 +674,9 @@ void DrawRingLines(Vector2 center, float innerRadius, float outerRadius, float s
 }
 
 // Draw a color-filled rectangle
-void DrawRectangle(int posX, int posY, int width, int height, Color color)
+void DrawRectangle(float posX, float posY, float width, float height, Color color)
 {
-    DrawRectangleV((Vector2){ (float)posX, (float)posY }, (Vector2){ (float)width, (float)height }, color);
+    DrawRectangleV((Vector2){ posX, posY }, (Vector2){ width, height }, color);
 }
 
 // Draw a color-filled rectangle (Vector version)
@@ -774,9 +774,9 @@ void DrawRectanglePro(Rectangle rec, Vector2 origin, float rotation, Color color
 }
 
 // Draw a vertical-gradient-filled rectangle
-void DrawRectangleGradientV(int posX, int posY, int width, int height, Color top, Color bottom)
+void DrawRectangleGradientV(float posX, float posY, float width, float height, Color top, Color bottom)
 {
-    DrawRectangleGradientEx((Rectangle){ (float)posX, (float)posY, (float)width, (float)height }, top, bottom, bottom, top);
+    DrawRectangleGradientEx((Rectangle){ posX, posY, width, height }, top, bottom, bottom, top);
 }
 
 // Draw a horizontal-gradient-filled rectangle
@@ -819,7 +819,7 @@ void DrawRectangleGradientEx(Rectangle rec, Color topLeft, Color bottomLeft, Col
 // WARNING: All Draw*Lines() functions use RL_LINES for drawing,
 // it implies flushing the current batch and changing draw mode to RL_LINES
 // but it solves another issue: https://github.com/raysan5/raylib/issues/3884
-void DrawRectangleLines(int posX, int posY, int width, int height, Color color)
+void DrawRectangleLines(float posX, float posY, float width, float height, Color color)
 {
     Matrix mat = rlGetMatrixTransform();
     float xOffset = 0.5f/mat.m0;
@@ -827,17 +827,17 @@ void DrawRectangleLines(int posX, int posY, int width, int height, Color color)
 
     rlBegin(RL_LINES);
         rlColor4ub(color.r, color.g, color.b, color.a);
-        rlVertex2f((float)posX + xOffset, (float)posY + yOffset);
-        rlVertex2f((float)posX + (float)width - xOffset, (float)posY + yOffset);
+        rlVertex2f(posX + xOffset, posY + yOffset);
+        rlVertex2f(posX + width - xOffset, posY + yOffset);
 
-        rlVertex2f((float)posX + (float)width - xOffset, (float)posY + yOffset);
-        rlVertex2f((float)posX + (float)width - xOffset, (float)posY + (float)height - yOffset);
+        rlVertex2f(posX + width - xOffset, posY + yOffset);
+        rlVertex2f(posX + width - xOffset, posY + height - yOffset);
 
-        rlVertex2f((float)posX + (float)width - xOffset, (float)posY + (float)height - yOffset);
-        rlVertex2f((float)posX + xOffset, (float)posY + (float)height - yOffset);
+        rlVertex2f(posX + width - xOffset, posY + height - yOffset);
+        rlVertex2f(posX + xOffset, posY + height - yOffset);
 
-        rlVertex2f((float)posX + xOffset, (float)posY + (float)height - yOffset);
-        rlVertex2f((float)posX + xOffset, (float)posY + yOffset);
+        rlVertex2f(posX + xOffset, posY + height - yOffset);
+        rlVertex2f(posX + xOffset, posY + yOffset);
     rlEnd();
 
 /*
